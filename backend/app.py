@@ -59,13 +59,19 @@ def create_job():
         company = request.form.get('company')
         location = request.form.get('location')
         email = request.form.get('email')
+        hiring_manager = request.form.get('hiringManager')
+        recruiter = request.form.get('recruiter')
+        start_date = request.form.get('startDate')
+        end_date = request.form.get('endDate')
+        target_candidates = request.form.get('targetCandidates')
+        source = request.form.get('source')
 
         # Debugging: Log all form data
         print("Form Data Received:")
-        print(f"uniqueId: {unique_id}, title: {title}, lpa: {lpa}, company: {company}, location: {location}, email: {email}")
+        print(f"uniqueId: {unique_id}, title: {title}, lpa: {lpa}, company: {company}, location: {location}, email: {email}, hiringManager: {hiring_manager}, recruiter: {recruiter}, startDate: {start_date}, endDate: {end_date}, targetCandidates: {target_candidates}, source: {source}")
 
         # Check if any form data is missing
-        if not all([unique_id, title, lpa, company, location, email]):
+        if not all([unique_id, title, lpa, company, location, email, hiring_manager, recruiter, start_date, end_date, target_candidates, source]):
             print("Error: Missing form data. Ensure all fields are filled.")
             return jsonify({"message": "Missing form data"}), 400
 
@@ -77,6 +83,12 @@ def create_job():
             "company": company,
             "location": location,
             "email": email,
+            "hiring_manager": hiring_manager,
+            "recruiter": recruiter,
+            "start_date": start_date,
+            "end_date": end_date,
+            "target_candidates": target_candidates,
+            "source": source,
             "pdf_filename": pdf.filename,
             "created_at": datetime.datetime.utcnow()
         }
@@ -91,6 +103,9 @@ def create_job():
         # Catch and log any server-side errors
         print("Error occurred:", str(e))
         return jsonify({"message": "Internal server error"}), 500
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
